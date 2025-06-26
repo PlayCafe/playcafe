@@ -3,85 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <title>Statystyki wyświetleń</title>
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <style>
     body {
       font-family: sans-serif;
       text-align: center;
       padding: 2rem;
-      background: #f0f0f0;
+      background-color: #f9f9f9;
     }
-    #chart {
-      width: 90%;
-      max-width: 600px;
-      margin: auto;
+
+    #count {
+      font-size: 3rem;
+      color: #4CAF50;
     }
   </style>
 </head>
 <body>
-  <h1>Statystyki wyświetleń</h1>
-  <div id="summary">Ładuję dane...</div>
-  <div id="chart"></div>
+  <h1>Liczba wyświetleń kodu QR:</h1>
+  <div id="count">Ładuję...</div>
 
   <script>
-    // Twój endpoint Google Apps Script do logów:
-    const sheetUrl = 'https://docs.google.com/spreadsheets/d/1qRYiNll7Y5-gh1yD97OBnNIo9Hjdg0NL7vpoTN1Nw2I/gviz/tq?tqx=out:json&sheet=logi';
-
-    fetch(sheetUrl)
-      .then(res => res.text())
-      .then(text => {
-        const json = JSON.parse(text.substr(47).slice(0, -2));
-        const rows = json.table.rows.map(r => r.c[0]?.v).filter(Boolean);
-
-        // Grupuj wg dat
-        const dataMap = {};
-        for (let date of rows) {
-          dataMap[date] = (dataMap[date] || 0) + 1;
-        }
-
-        // Oblicz sumy
-        const today = new Date().toISOString().slice(0, 10);
-        const thisWeekStart = new Date();
-        thisWeekStart.setDate(thisWeekStart.getDate() - thisWeekStart.getDay());
-        const thisMonth = today.slice(0, 7);
-
-        let sumToday = 0, sumWeek = 0, sumMonth = 0, sumAll = 0;
-        const chartData = [['Data', 'Wejścia']];
-
-        for (let date in dataMap) {
-          sumAll += dataMap[date];
-          if (date === today) sumToday += dataMap[date];
-          if (date >= thisWeekStart.toISOString().slice(0, 10)) sumWeek += dataMap[date];
-          if (date.startsWith(thisMonth)) sumMonth += dataMap[date];
-          chartData.push([date, dataMap[date]]);
-        }
-
-        // Sortuj wykres
-        chartData.sort((a, b) => a[0].localeCompare(b[0]));
-
-        // Pokaż podsumowanie
-        document.getElementById('summary').innerHTML = `
-          <p><strong>Dzisiaj:</strong> ${sumToday}</p>
-          <p><strong>W tym tygodniu:</strong> ${sumWeek}</p>
-          <p><strong>W tym miesiącu:</strong> ${sumMonth}</p>
-          <p><strong>Łącznie:</strong> ${sumAll}</p>
-        `;
-
-        // Wykres
-        google.charts.load('current', { packages: ['corechart'] });
-        google.charts.setOnLoadCallback(() => {
-          const data = google.visualization.arrayToDataTable(chartData);
-          const options = {
-            title: 'Liczba wyświetleń dziennie',
-            legend: { position: 'none' },
-            height: 300,
-          };
-          new google.visualization.ColumnChart(document.getElementById('chart')).draw(data, options);
-        });
+    fetch("https://script.google.com/macros/s/AKfycbwu_MR0-ht4j5SuXLpnNs2FKjo5HvnwlOIwgqqWUveqosz-wICej5uLTb1nL-zh8-d5/exec")
+      .then(response => response.text())
+      .then(count => {
+        document.getElementById("count").textContent = count;
       })
-      .catch(err => {
-        document.getElementById('summary').textContent = 'Błąd ładowania danych';
-        console.error(err);
+      .catch(() => {
+        document.getElementById("count").textContent = "Błąd ładowania";
       });
   </script>
 </body>
