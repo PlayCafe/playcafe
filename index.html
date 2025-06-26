@@ -21,9 +21,7 @@
       .then(count => {
         console.log("Liczba wyświetleń:", count);
         // Dopiero po odpowiedzi przekieruj
-        setTimeout(() => {
-          window.location.href = "https://www.facebook.com/profile.php?id=61562059288831";
-        }, 250); // 0.5 sekundy opóźnienia
+        window.location.href = "https://www.facebook.com/profile.php?id=61562059288831";
       })
       .catch(err => {
         console.error("Błąd licznika:", err);
