@@ -12,10 +12,25 @@
     }
   </style>
   <script>
-fetch("https://script.google.com/macros/s/AKfycbwu_MR0-ht4j5SuXLpnNs2FKjo5HvnwlOIwgqqWUveqosz-wICej5uLTb1nL-zh8-d5/exec?increment=true")
-  .then(res => res.text())
-  .then(console.log)
-  .catch(console.error);
+// Pobierz informacje o użytkowniku i wyślij do Google Apps Script
+const params = new URLSearchParams({
+  increment: 'true',
+  userAgent: navigator.userAgent,
+  timestamp: new Date().toISOString(),
+  referrer: document.referrer || 'direct'
+});
+
+fetch(`https://script.google.com/macros/s/AKfycbwu_MR0-ht4j5SuXLpnNs2FKjo5HvnwlOIwgqqWUveqosz-wICej5uLTb1nL-zh8-d5/exec?${params}`)
+  .then(res => res.json())
+  .then(data => {
+    console.log('Wejście zarejestrowane:', data);
+  })
+  .catch(err => {
+    console.error('Błąd rejestracji wejścia:', err);
+    // Fallback - spróbuj prostsze wywołanie
+    fetch("https://script.google.com/macros/s/AKfycbwu_MR0-ht4j5SuXLpnNs2FKjo5HvnwlOIwgqqWUveqosz-wICej5uLTb1nL-zh8-d5/exec")
+      .catch(console.error);
+  });
 </script>
 </head>
 <body>
