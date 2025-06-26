@@ -3,15 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="refresh" content="0;url=https://www.facebook.com/profile.php?id=61562059288831">
+ <title>Przekierowanie...</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 2rem;
+    }
+  </style>
   <script>
-  fetch('https://script.google.com/macros/s/AKfycbwu_MR0-ht4j5SuXLpnNs2FKjo5HvnwlOIwgqqWUveqosz-wICej5uLTb1nL-zh8-d5/exec?increment=true')
-    .then(response => response.text())
-    .then(count => {
-      console.log("Liczba wyświetleń:", count);
-    })
-    .catch(err => console.error(err));
-</script>
-  <title>Przekierowanie...</title>
+    // Wywołanie licznika (inkrementacja)
+    fetch("https://script.google.com/macros/s/AKfycbwu_MR0-ht4j5SuXLpnNs2FKjo5HvnwlOIwgqqWUveqosz-wICej5uLTb1nL-zh8-d5/exec?increment=true")
+      .then(response => response.text())
+      .then(count => console.log("Liczba wyświetleń:", count))
+      .catch(err => console.error("Błąd licznika:", err));
+  </script>
 </head>
 <body>
   <p>Przekierowanie... Jeśli nie nastąpiło automatycznie, <a href="https://www.facebook.com/profile.php?id=61562059288831">kliknij tutaj</a>.</p>
