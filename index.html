@@ -2,7 +2,6 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0;url=https://www.facebook.com/profile.php?id=61562059288831">
   <title>Przekierowanie...</title>
   <style>
     body {
@@ -11,15 +10,26 @@
       padding: 2rem;
     }
   </style>
-  <script>
-    // Wywołanie licznika (inkrementacja)
-    fetch("https://script.google.com/macros/s/AKfycbwu_MR0-ht4j5SuXLpnNs2FKjo5HvnwlOIwgqqWUveqosz-wICej5uLTb1nL-zh8-d5/exec?increment=true")
-      .then(response => response.text())
-      .then(count => console.log("Liczba wyświetleń:", count))
-      .catch(err => console.error("Błąd licznika:", err));
-  </script>
 </head>
 <body>
-  <p>Trwa przekierowanie... <a href="https://www.facebook.com/profile.php?id=61562059288831">Kliknij tutaj</a>, jeśli nie nastąpiło automatycznie.</p>
+  <p>Trwa przekierowanie... <a href="https://www.facebook.com/profile.php?id=61562059288831">Kliknij tutaj</a>, jeśli nie nastąpi automatycznie.</p>
+
+  <script>
+    // Najpierw zlicz wejście
+    fetch("https://script.google.com/macros/s/AKfycbwu_MR0-ht4j5SuXLpnNs2FKjo5HvnwlOIwgqqWUveqosz-wICej5uLTb1nL-zh8-d5/exec?increment=true")
+      .then(response => response.text())
+      .then(count => {
+        console.log("Liczba wyświetleń:", count);
+        // Dopiero po odpowiedzi przekieruj
+        setTimeout(() => {
+          window.location.href = "https://www.facebook.com/profile.php?id=61562059288831";
+        }, 500); // 0.5 sekundy opóźnienia
+      })
+      .catch(err => {
+        console.error("Błąd licznika:", err);
+        // Mimo błędu też przekieruj
+        window.location.href = "https://www.facebook.com/profile.php?id=61562059288831";
+      });
+  </script>
 </body>
 </html>
