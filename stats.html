@@ -8,21 +8,27 @@
       font-family: sans-serif;
       text-align: center;
       padding: 2rem;
+      background-color: #f9f9f9;
+    }
+
+    #count {
+      font-size: 3rem;
+      color: #4CAF50;
     }
   </style>
 </head>
 <body>
-  <h1>Liczba wyświetleń:</h1>
-  <div id="count" style="font-size: 2rem; color: #4CAF50;">Ładuję...</div>
+  <h1>Liczba wyświetleń kodu QR:</h1>
+  <div id="count">Ładuję...</div>
 
   <script>
-    fetch('https://script.google.com/macros/s/AKfycbwu_MR0-ht4j5SuXLpnNs2FKjo5HvnwlOIwgqqWUveqosz-wICej5uLTb1nL-zh8-d5/exec')
+    fetch("https://script.google.com/macros/s/AKfycbwu_MR0-ht4j5SuXLpnNs2FKjo5HvnwlOIwgqqWUveqosz-wICej5uLTb1nL-zh8-d5/exec")
       .then(response => response.text())
       .then(count => {
-        document.getElementById('count').textContent = count;
+        document.getElementById("count").textContent = count;
       })
       .catch(() => {
-        document.getElementById('count').textContent = 'Błąd ładowania';
+        document.getElementById("count").textContent = "Błąd ładowania";
       });
   </script>
 </body>
