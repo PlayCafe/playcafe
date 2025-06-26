@@ -11,24 +11,45 @@
       background-color: #f9f9f9;
     }
 
-    #count {
-      font-size: 3rem;
+    .stat {
+      font-size: 2rem;
       color: #4CAF50;
+    }
+
+    .label {
+      font-weight: bold;
+      margin-top: 1rem;
     }
   </style>
 </head>
 <body>
-  <h1>Liczba wyświetleń kodu QR:</h1>
-  <div id="count">Ładuję...</div>
+  <h1>Statystyki kodu QR</h1>
+  <div class="label">Dzisiaj:</div>
+  <div id="today" class="stat">Ładuję...</div>
+
+  <div class="label">W tym tygodniu:</div>
+  <div id="week" class="stat">Ładuję...</div>
+
+  <div class="label">W tym miesiącu:</div>
+  <div id="month" class="stat">Ładuję...</div>
+
+  <div class="label">Łącznie:</div>
+  <div id="total" class="stat">Ładuję...</div>
 
   <script>
     fetch("https://script.google.com/macros/s/AKfycbwu_MR0-ht4j5SuXLpnNs2FKjo5HvnwlOIwgqqWUveqosz-wICej5uLTb1nL-zh8-d5/exec")
-      .then(response => response.text())
-      .then(count => {
-        document.getElementById("count").textContent = count;
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById("today").textContent = data.today;
+        document.getElementById("week").textContent = data.week;
+        document.getElementById("month").textContent = data.month;
+        document.getElementById("total").textContent = data.total;
       })
       .catch(() => {
-        document.getElementById("count").textContent = "Błąd ładowania";
+        document.getElementById("today").textContent = "Błąd";
+        document.getElementById("week").textContent = "Błąd";
+        document.getElementById("month").textContent = "Błąd";
+        document.getElementById("total").textContent = "Błąd";
       });
   </script>
 </body>
